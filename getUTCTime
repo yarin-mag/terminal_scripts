@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: getUTCTime DD-MM-YYYY"
+  exit 1
+fi
+
+# Extract the date parts (day, month, year) from the input argument
+input_date=$1
+day=$(echo $input_date | cut -d'-' -f1)
+month=$(echo $input_date | cut -d'-' -f2)
+year=$(echo $input_date | cut -d'-' -f3)
+
+# Use node.js to run JavaScript and calculate the UTC time
+utc_time=$(node -e "
+const day = ${day};
+const month = ${month} - 1; // Month is 0-indexed in JS
+const year = ${year};
+const date = new Date(Date.UTC(year, month, day, 0, 0, 0, 0));
+console.log(date.getTime());
+")
+
+echo "UTC time in milliseconds: $utc_time"
+
+# Copy to clipboard based on the OS
+echo "$utc_time" | pbcopy
+echo "Copied to clipboard (macOS)"

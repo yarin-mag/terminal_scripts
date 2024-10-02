@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  echo "Usage: formatEpochTime <epochTime>"
+  exit 1
+fi
+
+# Get the epoch time from the argument
+epochTime=$1
+
+# Use node.js to run JavaScript and format the epoch time
+formattedTime=$(node -e "
+const epochTime = $epochTime;
+const date = new Date(epochTime);
+console.log(date.toLocaleString());
+")
+
+# Print the formatted time
+echo "Formatted time: $formattedTime"

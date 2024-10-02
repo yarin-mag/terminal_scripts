@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Get the current timestamp in milliseconds using JavaScript via node.js
+utc_time=$(node -e "console.log(Date.now());")
+
+# Print the timestamp
+echo "Date.now(): $utc_time"
+
+# Check for macOS and copy to clipboard if available
+if [[ $(uname) == "Darwin" ]]; then
+  echo "$utc_time" | pbcopy
+  echo "Copied to clipboard (macOS)"
+fi
